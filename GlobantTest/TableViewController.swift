@@ -20,10 +20,23 @@ class TableViewController: UITableViewController {
     
     var tableViewData = [cellInfo]()
     
+    var activityIndicator: UIActivityIndicatorView!
+    
     let dispatchGroup = DispatchGroup()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
+        activityIndicator.hidesWhenStopped = true
+        let barButton = UIBarButtonItem(customView: activityIndicator)
+        self.navigationItem.setRightBarButton(barButton, animated: true)
+        
+        let titleColor = [NSAttributedString.Key.foregroundColor:UIColor.black]
+        self.navigationController?.navigationBar.titleTextAttributes = titleColor
+        self.navigationController?.navigationBar.topItem?.title = "GlobantTest"
+        activityIndicator.startAnimating()
         
         var jsonResult = People()
         //var res = People()
@@ -52,6 +65,7 @@ class TableViewController: UITableViewController {
                 }
             }
             else if let error = error {
+                self.activityIndicator.stopAnimating()
                 print("Error: \(error)")
             }
         })
@@ -60,6 +74,7 @@ class TableViewController: UITableViewController {
         dispatchGroup.notify(queue: .main) {
             self.fill(result: jsonResult)
             self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
         }
         
     }
