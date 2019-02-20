@@ -67,7 +67,7 @@ class TableViewController: UITableViewController {
     func fill(result: People) {
         if result.results.count > 0 {
             for value in result.results {
-                tableViewData.append(cellInfo(name: value.name, height: value.height))
+                tableViewData.append(cellInfo(name: value.getName(), height: value.getHeight()))
             }
         }
         else{
@@ -80,8 +80,13 @@ class TableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return tableViewData.count
+        let num = tableViewData.count
+        if num > 5 {
+            return 5
+        }
+        else {
+            return num
+        }
         
     }
     
