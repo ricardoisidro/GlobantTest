@@ -43,7 +43,13 @@ class Results: NSObject, Decodable {
         self.created = ""
         self.edited = ""
         self.url = ""
-        
-        
+    }
+    
+    func getName() -> String {
+        return name
+    }
+    
+    func getHeight() -> String {
+        return height
     }
 }
